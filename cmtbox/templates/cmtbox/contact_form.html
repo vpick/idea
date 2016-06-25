@@ -1,0 +1,10 @@
+{% extends 'cmtbox/base.html' %}
+
+
+{% block content %}
+    <h1>New member</h1>
+    <form action="/member-info/" method="Post" class="member-form">{% csrf_token %}
+        {{form.as_p}}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'cmtbox/base.html' %}
+
+{% block content %}
+    {% for member in members %}
+        <div class="member">
+            <div class="date">
+                {{ member.post_date }}
+            </div>
+            <h1><a href="{% url 'member_detail' pk=member.pk %}">{{ member.name }}</a></h1>
+            <h3><p>{{ member.relation }}</p></h3>
+            <h4><p>{{ member.thought|linebreaksbr }}</p></h4>
+        </div>
+    {% endfor %}
+{% endblock content %}
