@@ -14,7 +14,7 @@ class Member(models.Model):
         self.published_date=timezone.now()
         self.save()
 
-    def __str__(self):
-        return self.relation
+    def __unicode__(self):
+        return "%s %s %s" %(self.name,self.relation,self.thought)
 
 # Create your models here.

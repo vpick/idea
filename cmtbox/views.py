@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+from django.http import HttpResponseRedirect
 from .models import Member
 from .forms import MemberForm
 #from django.http import HttpResponse
@@ -13,13 +14,22 @@ def member_list(request):
     return render(request, 'cmtbox/member_list.html', {'members':members})
 
 def new_member(request):
-    form=MemberForm()
+    if request.method == "POST":
+        form=MemberForm(request.POST)
+        if form.is_valid():
+            n1=form.cleaned_data['name']
+            n2=form.cleaned_data['relation']
+            n3=form.cleaned_data['thought']
+            member.save()
+            return HttpResponseRedirect('/cmtbox/member-info/')
+    else:
+        form=MemberForm()
     return render(request, 'cmtbox/contact_form.html', {'form':form})
 
 def member_detail(request,pk):
-	member=get_object_or_404(Member,pk=pk)
-	return render(request, 'cmtbox/member_detail.html',{'member':member})
+    member=get_object_or_404(Member, pk=pk)
+    return render(request, 'cmtbox/member_detail.html',{'member':member})
 
 def display_member(request):
-	members=Member.objects.filter(post_date__lte=timezone.now())
-	return render(request,'cmtbox/display_member.html',{'members':members})
+    members=Member.objects.all()
+    return render(request,'cmtbox/display_member.html',{'members':members})

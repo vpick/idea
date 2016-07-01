@@ -3,8 +3,10 @@
 
 {% block content %}
     <h1>New member</h1>
-    <form action="/member-info/" method="Post" class="member-form">{% csrf_token %}
-        {{form.as_p}}
+    <form action="/cmtbox/member-info/" method="Post">{% csrf_token %}
+        <table>
+            {{form.as_table}}
+        </table>
         <button type="submit">Save</button>
     </form>
 {% endblock %}
