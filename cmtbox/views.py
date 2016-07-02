@@ -15,25 +15,33 @@ def member_list(request):
 
 def new_member(request):   
     if request.method == "POST":
+    	print request.POST
         form=MemberForm(request.POST)
         if form.is_valid():
-            #member=Member.objects.create(name=name, relation=relation, thought=thought)
-            return redirect('member_detail', pk=member.pk)
+            n1=form.cleaned_data['name']
+            n2=form.cleaned_data['relation']
+            n3=form.cleaned_data['thought']
+            member=Member.objects.create(name=n1, relation=n2, thought=n1)
+            return redirect('display_member', {'member':member})
     else:
         form=MemberForm()
-    return render(request, 'cmtbox/display_member.html', {'form':form})
+    return render(request, 'cmtbox/contact_form.html', {'form':form})
 
 def member_detail(request, pk):
     member=get_object_or_404(Member, pk=pk)
     return render(request, 'cmtbox/member_detail.html',{'member':member})
 
-def display_member(request, pk):
+def display_member(request, pk=None):
+    print "in this view", pk
     member=get_object_or_404(Member, pk=pk)
     if request.method == "POST":
         form=MemberForm(request.POST, instance=member)
         if form.is_valid():
-            #member=Member.objects.create(name=name, relation=relation, thought=thought)
-            return redirect('member-info', pk=member.pk)
+            n1=form.cleaned_data['name']
+            n2=form.cleaned_data['relation']
+            n3=form.cleaned_data['thought']
+            member=Member.objects.create(name=n1, relation=n2, thought=n1)
+            return redirect('display_member',{'member':member})
     else:
         form=MemberForm(instance=member)
     return render(request, 'cmtbox/display_member.html', {'form':form})
