@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.http import HttpResponseRedirect
 from .models import Member
@@ -22,7 +22,7 @@ def new_member(request):
             n2=form.cleaned_data['relation']
             n3=form.cleaned_data['thought']
             member=Member.objects.create(name=n1, relation=n2, thought=n1)
-            return redirect('display_member', {'member':member})
+            return redirect('display_member')
     else:
         form=MemberForm()
     return render(request, 'cmtbox/contact_form.html', {'form':form})
@@ -41,7 +41,7 @@ def display_member(request, pk=None):
             n2=form.cleaned_data['relation']
             n3=form.cleaned_data['thought']
             member=Member.objects.create(name=n1, relation=n2, thought=n1)
-            return redirect('display_member',{'member':member})
+            return redirect('display_member')
     else:
         form=MemberForm(instance=member)
     return render(request, 'cmtbox/display_member.html', {'form':form})
